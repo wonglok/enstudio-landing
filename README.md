@@ -1,8 +1,10 @@
 # EffectNode Studio Landing Page Example
 
-Download Effect Node Studio Pre-release;
-
+## Download Effect Node Studio Pre-release
 https://github.com/wonglok/enstudio/releases/tag/r001
+
+## Download Effect Node Landing Page (Code Template Starter)
+https://github.com/wonglok/enstudio-landing
 
 Live Demo: https://enstudio-landing-page.vercel.app/about
 
