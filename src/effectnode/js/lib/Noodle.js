@@ -139,11 +139,11 @@ export class NoodleGeometry {
 
 export class Noodles {
   constructor({ tools }) {
-    let subdivisions = 200;
-    let count = 850;
+    let subdivisions = 70;
+    let count = 576;
     let numSides = 3;
-    let thickness = 0.8;
-    let ballSize = 0.56;
+    let thickness = 1.2;
+    let ballSize = 0.85;
 
     let geo = new NoodleGeometry({
       count,
@@ -179,8 +179,12 @@ export class Noodles {
 
     if (tools && tools.onUserData) {
       tools.onUserData(({ tailColor, ballColor, opacityTail, opacityBall }) => {
-        ballMat.userData.shader.uniforms.myColor.value = new Color(ballColor);
-        lineMat.userData.shader.uniforms.myColor.value = new Color(tailColor);
+        if (ballMat.userData.shader) {
+          ballMat.userData.shader.uniforms.myColor.value = new Color(ballColor);
+        }
+        if (lineMat.userData.shader) {
+          lineMat.userData.shader.uniforms.myColor.value = new Color(tailColor);
+        }
 
         ballMat.opacity = Math.abs(opacityBall / 100);
         lineMat.opacity = Math.abs(opacityTail / 100);
@@ -448,6 +452,25 @@ void makeGeo (out vec3 transformed, out vec3 objectNormal) {
 
         transformedNormal = vec3(normal);
 
+        `
+      );
+
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <color_pars_fragment>",
+        /* glsl */ `#include <color_pars_fragment>
+
+        uniform vec3 myColor;
+        `
+      );
+
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "gl_FragColor = vec4( outgoingLight, diffuseColor.a );",
+        /* glsl */ `
+        outgoingLight = myColor;
+
+        gl_FragColor = vec4( outgoingLight, diffuseColor.a );
+
+        // diffuseColor.rgb *= myColorV;
         `
       );
 
