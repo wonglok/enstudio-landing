@@ -177,43 +177,6 @@ export class Noodles {
       { tools }
     );
 
-    // let waitGet = ({ get, set }) => {
-    //   let tt = 0;
-    //   tt = setInterval(() => {
-    //     let res = get();
-    //     if (res) {
-    //       clearInterval(tt);
-    //       set(res);
-    //     }
-    //   });
-    // };
-    // if (tools && tools.onUserData) {
-    //   tools.onUserData(({ tailColor, ballColor, opacityTail, opacityBall }) => {
-    //     // waitGet({
-    //     //   get: () => ballMat.userData.shader,
-    //     //   set: (shader) =>
-    //     //     (shader.uniforms.myColor.value = new Color(ballColor)),
-    //     // });
-    //     // waitGet({
-    //     //   get: () => lineMat.userData.shader,
-    //     //   set: (shader) =>
-    //     //     (shader.uniforms.myColor.value = new Color(tailColor)),
-    //     // });
-    //     // ballMat.uniforms.myColor.value = new Color(ballColor);
-    //     // lineMat.uniforms.myColor.value = new Color(tailColor);
-    //     // if (ballMat.userData.shader) {
-    //     //   ballMat.userData.shader.uniforms.myColor.value = new Color(ballColor);
-    //     // }
-    //     // if (lineMat.userData.shader) {
-    //     //   lineMat.userData.shader.uniforms.myColor.value = new Color(tailColor);
-    //     // }
-    //     // ballMat.opacity = Math.abs(opacityBall / 100);
-    //     // lineMat.opacity = Math.abs(opacityTail / 100);
-    //     // ballMat.needsUpdate = true;
-    //     // lineMat.needsUpdate = true;
-    //   });
-    // }
-
     let tail = new Mesh(geo.lineGeo, lineMat);
     tail.scale.set(50, 50, 50);
     tail.frustumCulled = false;
