@@ -1,0 +1,363 @@
+{
+	"boxes": [
+		{
+			"isFirstUserBox": true,
+			"isProtected": true,
+			"isUserBoxes": true,
+			"_id": "AAA",
+			"x": 130.24069213867188,
+			"y": 113.67143249511719,
+			"displayName": "app",
+			"moduleName": "AAA__ID__app",
+			"fileName": "AAA__ID__app.js",
+			"slug": "app",
+			"inputs": [
+				{
+					"_id": "main_rID_123",
+					"name": "main"
+				},
+				{
+					"_id": "mode_rID_456",
+					"name": "mode"
+				}
+			],
+			"userData": [
+				{
+					"_id": "_23222452",
+					"name": "bgColor",
+					"type": "color",
+					"value": "#0a0a0a"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_20373994",
+			"x": 502.8025360107422,
+			"y": 215.4080352783203,
+			"displayName": "mesh",
+			"moduleName": "mesh__ID___20373994",
+			"fileName": "mesh__ID___20373994.js",
+			"slug": "mesh",
+			"userData": [
+				{
+					"_id": "_48825744",
+					"name": "color",
+					"type": "color",
+					"value": "#ffffff"
+				},
+				{
+					"_id": "_58636374",
+					"name": "rx",
+					"type": "number",
+					"value": 5.9
+				},
+				{
+					"_id": "_70842090",
+					"name": "ry",
+					"type": "number",
+					"value": 48.6
+				},
+				{
+					"_id": "_74722661",
+					"name": "rz",
+					"type": "number",
+					"value": -8
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_39203022",
+					"name": "main"
+				},
+				{
+					"_id": "_24282020",
+					"name": "speed"
+				},
+				{
+					"_id": "_7174901",
+					"name": "color"
+				},
+				{
+					"_id": "_86135082",
+					"name": "pulse"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_55713472",
+			"x": 428.71250915527344,
+			"y": 387.93218994140625,
+			"displayName": "geo",
+			"moduleName": "geo__ID___55713472",
+			"fileName": "geo__ID___55713472.js",
+			"slug": "geo",
+			"userData": [
+				{
+					"_id": "_13078412",
+					"name": "radius",
+					"type": "number",
+					"value": 10.9
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_94974077",
+					"name": "main"
+				},
+				{
+					"_id": "_10101073",
+					"name": "speed"
+				},
+				{
+					"_id": "_70930974",
+					"name": "color"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_34583859",
+			"x": 637.5299682617188,
+			"y": 378.62225341796875,
+			"displayName": "mat",
+			"moduleName": "mat__ID___34583859",
+			"fileName": "mat__ID___34583859.js",
+			"slug": "mat",
+			"userData": [
+				{
+					"_id": "_37543847",
+					"name": "res",
+					"type": "number",
+					"number": -1.1,
+					"value": -17
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_80198685",
+					"name": "main"
+				},
+				{
+					"_id": "_84148374",
+					"name": "speed"
+				},
+				{
+					"_id": "_136031",
+					"name": "color"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_63164145",
+			"x": 78.4464111328125,
+			"y": 539.3603210449219,
+			"displayName": "points",
+			"moduleName": "points__ID___63164145",
+			"fileName": "points__ID___63164145.js",
+			"slug": "points",
+			"userData": [
+				{
+					"_id": "_59060423",
+					"name": "tailColor",
+					"type": "color",
+					"value": "#001eff"
+				},
+				{
+					"_id": "_86760623",
+					"name": "ballColor",
+					"type": "color",
+					"value": "#5c372d"
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_73853949",
+					"name": "main"
+				},
+				{
+					"_id": "_68826552",
+					"name": "speed"
+				},
+				{
+					"_id": "_69027790",
+					"name": "color"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_24220078",
+			"x": 47.777008056640625,
+			"y": 311.496826171875,
+			"displayName": "simulation",
+			"moduleName": "simulation__ID___24220078",
+			"fileName": "simulation__ID___24220078.js",
+			"slug": "simulation",
+			"userData": [
+				{
+					"_id": "_77752851",
+					"name": "colorSeed",
+					"type": "number",
+					"value": -35.3
+				},
+				{
+					"_id": "_46724099",
+					"name": "opacityBall",
+					"type": "number",
+					"value": 100
+				},
+				{
+					"_id": "_74787350",
+					"name": "opacityLines",
+					"type": "number",
+					"value": 22.2
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_81373655",
+					"name": "main"
+				},
+				{
+					"_id": "_15674219",
+					"name": "speed"
+				},
+				{
+					"_id": "_26150378",
+					"name": "color"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_7188763",
+			"x": 257.46331787109375,
+			"y": 535.7161865234375,
+			"displayName": "selectiveGlow",
+			"moduleName": "effects__ID___7188763",
+			"fileName": "effects__ID___7188763.js",
+			"slug": "effects",
+			"userData": [
+				{
+					"_id": "_50273784",
+					"name": "strength",
+					"type": "number",
+					"value": 74.2
+				},
+				{
+					"_id": "_90923198",
+					"name": "radius",
+					"type": "number",
+					"value": 18.3
+				},
+				{
+					"_id": "_57174349",
+					"name": "threshold",
+					"type": "number",
+					"value": 0
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_70577619",
+					"name": "main"
+				},
+				{
+					"_id": "_49295769",
+					"name": "speed"
+				},
+				{
+					"_id": "_10769985",
+					"name": "color"
+				}
+			]
+		},
+		{
+			"isFirstUserBox": false,
+			"isProtected": false,
+			"isUserBoxes": true,
+			"_id": "_26217787",
+			"x": 243.1161651611328,
+			"y": 337.14154052734375,
+			"displayName": "allGlow",
+			"moduleName": "allglow__ID___26217787",
+			"fileName": "allglow__ID___26217787.js",
+			"slug": "allglow",
+			"userData": [
+				{
+					"_id": "_14950940",
+					"name": "strength",
+					"type": "number",
+					"value": 100
+				},
+				{
+					"_id": "_51416224",
+					"name": "radius",
+					"type": "number",
+					"value": 7.7
+				},
+				{
+					"_id": "_75466983",
+					"name": "threshold",
+					"type": "number",
+					"value": 12.6
+				}
+			],
+			"inputs": [
+				{
+					"_id": "_89280058",
+					"name": "main"
+				},
+				{
+					"_id": "_23076410",
+					"name": "speed"
+				},
+				{
+					"_id": "_97133650",
+					"name": "color"
+				}
+			]
+		}
+	],
+	"cables": [
+		{
+			"_id": "_94460474",
+			"outputBoxID": "_20373994",
+			"inputBoxID": "_55713472",
+			"inputSlotID": "_94974077"
+		},
+		{
+			"_id": "_5855032",
+			"outputBoxID": "_20373994",
+			"inputBoxID": "_34583859",
+			"inputSlotID": "_80198685"
+		},
+		{
+			"_id": "_14038947",
+			"outputBoxID": "AAA",
+			"inputBoxID": "_24220078",
+			"inputSlotID": "_81373655"
+		},
+		{
+			"_id": "_73318567",
+			"outputBoxID": "AAA",
+			"inputBoxID": "_26217787",
+			"inputSlotID": "_89280058"
+		}
+	]
+}
