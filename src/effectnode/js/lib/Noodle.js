@@ -162,7 +162,7 @@ export class Noodles {
         roughness: 0.5,
         opacity: 0.5,
       }),
-      { subdivisions, thickness }
+      { subdivisions, thickness, tools }
     );
 
     let ballMat = new NoodleBallMaterial(
@@ -174,48 +174,45 @@ export class Noodles {
         roughness: 0.5,
         opacity: 0.5,
       }),
-      {}
+      { tools }
     );
 
-    let waitGet = ({ get, set }) => {
-      let tt = 0;
-      tt = setInterval(() => {
-        let res = get();
-        if (res) {
-          clearInterval(tt);
-          set(res);
-        }
-      });
-    };
-
-    if (tools && tools.onUserData) {
-      tools.onUserData(({ tailColor, ballColor, opacityTail, opacityBall }) => {
-        waitGet({
-          get: () => ballMat.userData.shader,
-          set: (shader) =>
-            (shader.uniforms.myColor.value = new Color(ballColor)),
-        });
-
-        waitGet({
-          get: () => lineMat.userData.shader,
-          set: (shader) =>
-            (shader.uniforms.myColor.value = new Color(tailColor)),
-        });
-
-        // if (ballMat.userData.shader) {
-        //   ballMat.userData.shader.uniforms.myColor.value = new Color(ballColor);
-        // }
-        // if (lineMat.userData.shader) {
-        //   lineMat.userData.shader.uniforms.myColor.value = new Color(tailColor);
-        // }
-
-        ballMat.opacity = Math.abs(opacityBall / 100);
-        lineMat.opacity = Math.abs(opacityTail / 100);
-
-        ballMat.needsUpdate = true;
-        lineMat.needsUpdate = true;
-      });
-    }
+    // let waitGet = ({ get, set }) => {
+    //   let tt = 0;
+    //   tt = setInterval(() => {
+    //     let res = get();
+    //     if (res) {
+    //       clearInterval(tt);
+    //       set(res);
+    //     }
+    //   });
+    // };
+    // if (tools && tools.onUserData) {
+    //   tools.onUserData(({ tailColor, ballColor, opacityTail, opacityBall }) => {
+    //     // waitGet({
+    //     //   get: () => ballMat.userData.shader,
+    //     //   set: (shader) =>
+    //     //     (shader.uniforms.myColor.value = new Color(ballColor)),
+    //     // });
+    //     // waitGet({
+    //     //   get: () => lineMat.userData.shader,
+    //     //   set: (shader) =>
+    //     //     (shader.uniforms.myColor.value = new Color(tailColor)),
+    //     // });
+    //     // ballMat.uniforms.myColor.value = new Color(ballColor);
+    //     // lineMat.uniforms.myColor.value = new Color(tailColor);
+    //     // if (ballMat.userData.shader) {
+    //     //   ballMat.userData.shader.uniforms.myColor.value = new Color(ballColor);
+    //     // }
+    //     // if (lineMat.userData.shader) {
+    //     //   lineMat.userData.shader.uniforms.myColor.value = new Color(tailColor);
+    //     // }
+    //     // ballMat.opacity = Math.abs(opacityBall / 100);
+    //     // lineMat.opacity = Math.abs(opacityTail / 100);
+    //     // ballMat.needsUpdate = true;
+    //     // lineMat.needsUpdate = true;
+    //   });
+    // }
 
     let tail = new Mesh(geo.lineGeo, lineMat);
     tail.scale.set(50, 50, 50);
@@ -313,8 +310,9 @@ export class CommonShader {
 }
 
 export class NoodleBallMaterial {
-  constructor(args) {
+  constructor(args, { tools }) {
     this.material = new MeshStandardMaterial(args);
+    this.tools = tools;
     this.setup();
     return this.material;
   }
@@ -322,6 +320,13 @@ export class NoodleBallMaterial {
     let onBeforeCompile = (shader, renderer) => {
       shader.uniforms.time = { value: 0 };
       shader.uniforms.myColor = { value: new Color("#ffffff") };
+
+      if (this.tools && this.tools.onUserData) {
+        this.tools.onUserData(({ ballColor, opacityBall }) => {
+          shader.uniforms.myColor.value = new Color(ballColor);
+          this.material.opacity = Math.abs(opacityBall / 100);
+        });
+      }
 
       let clock = new Clock();
       setInterval(() => {
@@ -378,10 +383,11 @@ ${CommonShader.UtilFunctions()}
 }
 
 export class NoodleLineMaterial {
-  constructor(material, { subdivisions, thickness }) {
+  constructor(material, { subdivisions, thickness, tools }) {
     this.material = material;
     this.subdivisions = subdivisions;
     this.thickness = thickness;
+    this.tools = tools;
 
     this.setup();
 
@@ -391,6 +397,14 @@ export class NoodleLineMaterial {
     let onBeforeCompile = (shader, renderer) => {
       shader.uniforms.time = { value: 0 };
       shader.uniforms.myColor = { value: new Color("#ffffff") };
+
+      if (this.tools && this.tools.onUserData) {
+        // tools.onUserData(({ tailColor, ballColor, opacityTail, opacityBall }) => {
+        this.tools.onUserData(({ tailColor, opacityTail }) => {
+          shader.uniforms.myColor.value = new Color(tailColor);
+          this.material.opacity = Math.abs(opacityTail / 100);
+        });
+      }
 
       let clock = new Clock();
       setInterval(() => {
