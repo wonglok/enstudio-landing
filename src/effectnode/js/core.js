@@ -134,6 +134,7 @@ function MyCore({ mounter }) {
     };
     if (BoxGlob[box.moduleName] && BoxGlob[box.moduleName].box) {
       BoxGlob[box.moduleName].box({
+        box,
         onUserData,
         resources,
         domElement: mounter,

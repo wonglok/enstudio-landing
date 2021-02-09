@@ -13,81 +13,59 @@ BoxScripts[box.moduleName].box({
 
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
-import { Canvas, useThree } from "react-three-fiber";
-import { Color, PMREMGenerator, sRGBEncoding, UnsignedByteType } from "three";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
-import { OrbitControls } from "@react-three/drei";
-// import { EffectComposer } from "react-postprocessing";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function Background({ onUserData }) {
-  let { scene, gl } = useThree();
+function DynamicRoot({ relay }) {
+  let [routes, addRoutes] = useState([]);
 
   useEffect(() => {
-    return onUserData(({ bgColor }) => {
-      scene.background = new Color(bgColor || "#000000");
-    });
-  }, []);
-
-  useEffect(() => {
-    let hdri = require("../../assets/room.hdr").default;
-    const pmremGenerator = new PMREMGenerator(gl);
-    pmremGenerator.compileEquirectangularShader();
-    new RGBELoader()
-      .setDataType(UnsignedByteType) // alt: FloatType, HalfFloatType
-      .load(hdri, (texture) => {
-        const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-        envMap.encoding = sRGBEncoding;
-        scene.environment = envMap;
-        // scene.background = envMap;
-      });
-  }, []);
-
-  return <group></group>;
-}
-
-function EffectNode({ tools, ...props }) {
-  let [element, mountElement] = useState([]);
-
-  useEffect(() => {
-    mountElement([]);
-  }, []);
-
-  useEffect(() => {
-    tools.pulse({
+    relay.pulse({
       type: "mount",
-      done: (newItem) => {
-        mountElement((s) => {
-          return [...s, newItem];
+      done: (v) => {
+        addRoutes((s) => {
+          if (v) {
+            return [
+              ...s,
+              <Route key={`_route_` + Math.random()} path={v.path}>
+                {v.react}
+              </Route>,
+            ];
+          } else {
+            return [...s];
+          }
         });
       },
     });
   }, []);
 
-  return <group {...props}>{element}</group>;
+  return (
+    <Router>
+      <Switch>{routes}</Switch>
+    </Router>
+  );
 }
 
-export const box = ({ onUserData, domElement, pulse }) => {
-  ReactDOM.render(
-    <Canvas
-      colorManagement={true}
-      pixelRatio={window.devicePixelRatio || 1.0}
-      camera={{ position: [0, 0, -50] }}
-      onCreated={({ gl }) => {
-        gl.outputEncoding = sRGBEncoding;
-      }}
-    >
-      <Background onUserData={onUserData}></Background>
+export const box = ({ domElement, ...relay }) => {
+  // ReactDOM.render(
+  //   <Canvas
+  //     colorManagement={true}
+  //     pixelRatio={window.devicePixelRatio || 1.0}
+  //     camera={{ position: [0, 0, -50] }}
+  //     onCreated={({ gl }) => {
+  //       gl.outputEncoding = sRGBEncoding;
+  //     }}
+  //   >
+  //     <Background onUserData={onUserData}></Background>
+  //     <EffectNode
+  //       scale={[1, 1, 1]}
+  //       position={[0, 0, 0]}
+  //       tools={{ pulse }}
+  //     ></EffectNode>
+  //     <OrbitControls />
+  //     <ambientLight intensity={1.0} />
+  //   </Canvas>,
+  //   domElement
+  // );
 
-      <EffectNode
-        scale={[1, 1, 1]}
-        position={[0, 0, 0]}
-        tools={{ pulse }}
-      ></EffectNode>
-
-      <OrbitControls />
-
-      <ambientLight intensity={1.0} />
-    </Canvas>,
-    domElement
-  );
+  ReactDOM.render(<DynamicRoot relay={relay}></DynamicRoot>, domElement);
 };

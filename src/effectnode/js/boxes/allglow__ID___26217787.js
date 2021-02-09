@@ -20,7 +20,9 @@ export default function Effects({ tools }) {
   const composer = useRef();
   const { scene, gl, size, camera } = useThree();
   let dpi = window.devicePixelRatio || 1.0;
-  dpi = 1.25;
+  dpi = 1.0;
+
+  //
 
   const unreal = useRef();
   useEffect(
@@ -55,9 +57,11 @@ export default function Effects({ tools }) {
 }
 
 export const box = async ({ ...tools }) => {
-  tools.stream(0, ({ type, done }) => {
-    if (type === "mount") {
-      done(<Effects key={"effects"} tools={tools}></Effects>);
-    }
+  [0, 1, 2].forEach((i) => {
+    tools.stream(i, ({ type, done }) => {
+      if (type === "mount") {
+        done(<Effects key={"effects"} tools={tools}></Effects>);
+      }
+    });
   });
 };

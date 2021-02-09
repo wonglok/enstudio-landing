@@ -16,6 +16,8 @@ import {
 import { Geometry } from "three/examples/jsm/deprecated/Geometry.js";
 import { CurlNoise, CommonFunc, FBMNoise } from "./glsl";
 
+export const BLOOM_SCENE = 3;
+
 export class NoodleGeometry {
   constructor({
     count = 100,
@@ -26,6 +28,7 @@ export class NoodleGeometry {
   }) {
     const radius = 1;
     const length = 1;
+
     const cylinderBufferGeo = new CylinderBufferGeometry(
       radius,
       radius,
@@ -155,8 +158,8 @@ export class Noodles {
         color: new Color("#ffffff"),
         side: DoubleSide,
         transparent: true,
-        metalness: 0.0,
-        roughness: 1.0,
+        metalness: 0.5,
+        roughness: 0.5,
         opacity: 0.5,
       }),
       { subdivisions, thickness }
@@ -167,31 +170,40 @@ export class Noodles {
         color: new Color("#ffffff"),
         side: DoubleSide,
         transparent: true,
-        metalness: 0.7,
-        roughness: 0.12,
+        metalness: 0.5,
+        roughness: 0.5,
         opacity: 0.5,
       }),
       {}
     );
 
     if (tools && tools.onUserData) {
-      tools.onUserData(({ tailColor, ballColor }) => {
-        ballMat.color = new Color(ballColor);
-        lineMat.color = new Color(tailColor);
+      tools.onUserData(({ tailColor, ballColor, opacityTail, opacityBall }) => {
+        ballMat.userData.shader.uniforms.myColor.value = new Color(ballColor);
+        lineMat.userData.shader.uniforms.myColor.value = new Color(tailColor);
+
+        ballMat.opacity = Math.abs(opacityBall / 100);
+        lineMat.opacity = Math.abs(opacityTail / 100);
+
+        ballMat.needsUpdate = true;
+        lineMat.needsUpdate = true;
       });
     }
 
     let tail = new Mesh(geo.lineGeo, lineMat);
-    tail.scale.set(13, 13, 13);
+    tail.scale.set(50, 50, 50);
     tail.frustumCulled = false;
 
     let ball = new Mesh(geo.ballGeo, ballMat);
-    ball.scale.set(13, 13, 13);
+    ball.scale.set(50, 50, 50);
     ball.frustumCulled = false;
 
     this.object3d = new Object3D();
     this.object3d.add(tail);
     this.object3d.add(ball);
+
+    ball.layers.enable(BLOOM_SCENE);
+    tail.layers.enable(BLOOM_SCENE);
 
     // let rAF = () => {
     //   window.requestAnimationFrame(rAF);
@@ -255,7 +267,7 @@ export class CommonShader {
   `;
   }
   static CoordProcedure() {
-    return `
+    return /* glsl */ `
     // "t" is from 0 to 1
     // output "coord" variable
 
@@ -267,7 +279,7 @@ export class CommonShader {
 
     vec3 coord = catmullRom(p0, p1, p2, p3, t);
 
-    coord += 0.1 * snoiseVec3(vec3(coord * 2.0 - 1.0 + time * 0.6));
+    coord += 0.06 * snoiseVec3(vec3(coord * 2.0 - 1.0 + time * 0.6));
 
     `;
   }
@@ -282,6 +294,7 @@ export class NoodleBallMaterial {
   setup() {
     let onBeforeCompile = (shader, renderer) => {
       shader.uniforms.time = { value: 0 };
+      shader.uniforms.myColor = { value: new Color("#ffffff") };
 
       let clock = new Clock();
       setInterval(() => {
@@ -317,6 +330,7 @@ ${CommonShader.UtilFunctions()}
 
         vec3 transformed = position + coord;
 
+
         `
       );
 
@@ -349,6 +363,7 @@ export class NoodleLineMaterial {
   setup() {
     let onBeforeCompile = (shader, renderer) => {
       shader.uniforms.time = { value: 0 };
+      shader.uniforms.myColor = { value: new Color("#ffffff") };
 
       let clock = new Clock();
       setInterval(() => {

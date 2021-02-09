@@ -96,8 +96,8 @@ export default function Effects({ tools }) {
     // finalPassUniforms.bloomSatuationPower.value = params.bloomSatuationPower;
 
     camera.layers.enableAll();
+    renderer.setRenderTarget(baseRenderTarget);
     renderer.clear();
-    renderer.clearTarget(baseRenderTarget);
     renderer.setRenderTarget(baseRenderTarget);
     renderer.render(scene, camera);
 
