@@ -26,6 +26,7 @@ export class NoodleGeometry {
     openEnded = true,
     ballSize = 1.0,
   }) {
+    //
     const radius = 1;
     const length = 1;
 
