@@ -174,10 +174,10 @@ export async function main({ mounter }) {
   if (process.env.NODE_ENV === "development") {
     let io = require("socket.io-client");
 
-    let socketServer = config.studio.appleLocal;
+    let socketServer = config.studio.apple;
 
     await fetch(socketServer, { mode: "no-cors" }).catch((e) => {
-      socketServer = config.studio.socketServer;
+      socketServer = config.studio.server;
     });
 
     let socket = io(socketServer);

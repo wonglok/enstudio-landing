@@ -1,6 +1,6 @@
 {
   "studio": {
-    "appleLocal": "http://wonglok.local:1234",
+    "apple": "http://wonglok.local:1234",
     "server": "http://localhost:1234",
     "port": 1234
   },
