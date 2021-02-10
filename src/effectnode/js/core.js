@@ -199,6 +199,22 @@ export async function main({ mounter }) {
       socket.emit("request-input-stream", {});
     });
     socket.emit("request-input-stream", {});
+
+    let loading = document.createElement("div");
+    loading.innerHTML = `
+      <div>
+        <div>Connecting to EffectNode Studio...</div>
+        <a style="text-align: center; display: inline-block; width: 100%; font-size: 20px; text-decoration: underline; color: #238823;" href="${window.location.href}">Click here to try again</a>
+      </div>
+    `;
+    loading.style.cssText = `transition: opacity 1.5s; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: flex; justify-content:center; align-items: center; font-size: 30px; z-index: 1000000; background: white;`;
+    document.body.appendChild(loading);
+    onReadyState(() => {
+      loading.style.cssText = `transition: opacity 1.5s; opacity: 0; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: flex; justify-content:center; align-items: center; font-size: 30px; z-index: 1000000; background: white;`;
+      setTimeout(() => {
+        loading.remove();
+      }, 1500);
+    });
   }
 
   onReadyState(() => {
